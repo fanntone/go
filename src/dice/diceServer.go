@@ -7,35 +7,35 @@ import (
 )
 
 type Random struct {
-	Range	int `json:"range"`
-	Result  int `json:"reslut"`
+	Range	int	`json:"range"`
+	Result	int	`json:"reslut"`
 }
 
 type EtheRoll struct {
 	BetNumber		int		`json:"number"`
 	BetAmount		float64	`json:"amount"`
-	RandomResult	int 	`josn:"result"`
+	RandomResult	int		`josn:"result"`
 	WinAmount		float64	`json:"winamount"`
 }
 
 type CoinFilps struct {
 	BetNumber		int		`json:"number"`
 	BetAmount		float64	`json:"amount"`
-	RandomResult	int 	`josn:"result"`
+	RandomResult	int		`josn:"result"`
 	WinAmount		float64	`json:"winamount"`
 }
 
 type RollADices struct {
 	BetNumber		[6]int	`json:"number"`
 	BetAmount		float64	`json:"amount"`
-	RandomResult	int 	`josn:"result"`
+	RandomResult	int		`josn:"result"`
 	WinAmount		float64	`json:"winamount"`
 }
 
 type TwoDices struct {
 	BetNumber		[12]int		`json:"number"`
 	BetAmount		float64		`json:"amount"`
-	RandomResult	int 		`josn:"result"`
+	RandomResult	int			`josn:"result"`
 	WinAmount		float64		`json:"winamount"`
 }
 
