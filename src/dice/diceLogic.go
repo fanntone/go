@@ -22,36 +22,30 @@ func GetRandom(num int) int {
 // RollADice : 
 // Bet on numbers, 1 to 6.
 // Winning bet pays up to 5.88x
-func RollADice( num1 int,
-                num2 int,
-                num3 int,
-                num4 int,
-                num5 int,
-                num6 int,
-                money float64) float64 {
+func RollADice(num [6]int, money float64) (int,float64) {
     winvalue := 0.0
     x := (GetRandom(6) + 1)
 
     betTable := []float64{ 0, 5.88, 2.94, 1.96, 1.47, 1.18, 0} 
-    total := num1 + num2 + num3 + num4 + num5 + num6
+    total := num[0] + num[1] + num[2] + num[3] + num[4] + num[5]
 
     if (total <= 0 || total >= 6) {
-        return winvalue;
+        return x,winvalue;
     }
     
-    if ((1 == num1 && x == 1) || (1 == num2 && x == 2) || (1 == num3 && x == 3) ||
-        (1 == num4 && x == 4) || (1 == num5 && x == 5) || (1 == num6 && x == 6)) {
+    if ((1 == num[0] && x == 1) || (1 == num[1] && x == 2) || (1 == num[2] && x == 3) ||
+        (1 == num[3] && x == 4) || (1 == num[4] && x == 5) || (1 == num[5] && x == 6)) {
         winvalue = betTable[total] * float64(money)
     }
 
     fmt.Println("Win value: = ", winvalue)
-    return winvalue
+    return x,winvalue
 }
 
 // TwoDice :
 // Bet on sum, 2 to 12.
 // Winning bet pays up to 35.64x
-func TwoDice(num [12]int, money float64) float64 {
+func TwoDice(num [12]int, money float64) (int, float64) {
     winvalue := 0.0
     x := (GetRandom(11) + 2)
 
@@ -61,26 +55,30 @@ func TwoDice(num [12]int, money float64) float64 {
         total += num[i]
     }
 
+    if (total <= 0 || total >= 13) {
+        return x,winvalue;
+    }
+
     for j := 0; j < len(betTable); j++ {
         if (1 == num[j] && x == (j + 1)) {
-            winvalue = betTable[total] * float64(money)
+            winvalue = betTable[total -1] * float64(money)
             break;
         }
     }
 
     fmt.Println("Win value: = ", winvalue)
-    return winvalue
+    return x,winvalue
 }
 
 // CoinFilp :
 // 50% win chance.
 // Winning bet pays 1.98x
-func CoinFilp(num int, money float64) float64 {
+func CoinFilp(num int, money float64) (int,float64) {
     winvalue := 0.0
     x := GetRandom(2)
 
     if (num < 0 || num > 1) {
-        return winvalue;
+        return x,winvalue;
     }
 
     if (num == x) {
@@ -88,12 +86,13 @@ func CoinFilp(num int, money float64) float64 {
     }
 
     fmt.Println("Win value: = ", winvalue)
-    return winvalue
+    return x,winvalue
 }
 
 // Etheroll :
 // Any win chance, 1% to 97%.
 // Winning bet pays up to 98x
+// Return (random, winvalue)
 func Etheroll(num int, money float64) (int,float64) {
     winvalue := 0.0
     x := GetRandom(100) + 1
