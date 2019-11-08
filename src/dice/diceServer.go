@@ -33,10 +33,10 @@ type RollADices struct {
 }
 
 type TwoDices struct {
-	BetNumber		[12]int		`json:"number"`
-	BetAmount		float64		`json:"amount"`
-	RandomResult	int			`josn:"result"`
-	WinAmount		float64		`json:"winamount"`
+	BetNumber		[12]int	`json:"number"`
+	BetAmount		float64	`json:"amount"`
+	RandomResult	int		`josn:"result"`
+	WinAmount		float64	`json:"winamount"`
 }
 
 //post接口接收json數據
