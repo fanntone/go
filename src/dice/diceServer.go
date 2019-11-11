@@ -93,12 +93,8 @@ func PlayRollADice(writer http.ResponseWriter,  request *http.Request) {
 		request.Body.Close()
 		log.Fatal(err)
 	}
-	var x [6]int
-	for i:=0; i<6; i++ {
-		x[i] = bet.BetNumber[i]
-	}
-	y := bet.BetAmount
-	bet.RandomResult,bet.WinAmount = RollADice(x,y)
+
+	bet.RandomResult,bet.WinAmount = RollADice(bet.BetNumber, bet.BetAmount)
 
 	if err := json.NewEncoder(writer).Encode(bet); err != nil {
 		log.Fatal(err)
