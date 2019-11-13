@@ -5,13 +5,56 @@ package main
 import (
     "fmt"
     "math/rand"
-    "time"
+    // "time"
+
+
+    "log"
+    "github.com/miguelmota/go-ethereum-hdwallet"
+    "github.com/tyler-smith/go-bip39"
+    "strconv"
+    "strings"
 )
+
+
+// GetSefeRandomSeed is prodiver safe seed function
+func GetSefeRandomSeed() int64 {
+    entropy, err := bip39.NewEntropy(128)
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    mnemonic, _ := bip39.NewMnemonic(entropy)
+    seed := bip39.NewSeed(mnemonic, "")
+
+    fmt.Println("memonic: ", mnemonic)
+    fmt.Println("seed: ", seed)
+
+    wallet, err := hdwallet.NewFromSeed(seed)
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    path := hdwallet.MustParseDerivationPath("m/44'/60'/0'/0/0")
+    account, err := wallet.Derive(path, false)
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    fmt.Println(account.Address.Hex())
+    str := account.Address.Hex();
+    subs := str[2:12]
+    res, err := strconv.ParseInt(strings.ToLower(subs), 16, 64)
+    if err != nil {
+        log.Fatal(err)
+    }
+    
+    return res
+}
 
 // GetRandom is a call func
 // retrun 0 ~ num-1.
 func GetRandom(num int) int {
-    s1 := rand.NewSource(time.Now().UnixNano())
+    s1 := rand.NewSource(GetSefeRandomSeed())
     r1 := rand.New(s1)
     x := r1.Intn(num)
     fmt.Print("Rand result: = ", x, ", " )
