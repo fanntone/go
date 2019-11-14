@@ -5,8 +5,6 @@ package main
 import (
     "fmt"
     "math/rand"
-    // "time"
-
 
     "log"
     "github.com/miguelmota/go-ethereum-hdwallet"
@@ -42,7 +40,7 @@ func GetSefeRandomSeed() int64 {
 
     fmt.Println(account.Address.Hex())
     str := account.Address.Hex();
-    subs := str[2:12]
+    subs := str[2:9]
     res, err := strconv.ParseInt(strings.ToLower(subs), 16, 64)
     if err != nil {
         log.Fatal(err)
