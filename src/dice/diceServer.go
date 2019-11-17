@@ -1,46 +1,46 @@
 package main
 
 import (
+	"encoding/json"
 	"log"
 	"net/http"
-	"encoding/json"
 )
 
 type Random struct {
-	Range	int	`json:"range"`
-	Result	int	`json:"reslut"`
+	Range  int `json:"range"`
+	Result int `json:"reslut"`
 }
 
 type EtheRoll struct {
-	BetNumber		int		`json:"number"`
-	BetAmount		float64	`json:"amount"`
-	RandomResult	int		`josn:"result"`
-	WinAmount		float64	`json:"winamount"`
+	BetNumber    int     `json:"number"`
+	BetAmount    float64 `json:"amount"`
+	RandomResult int     `josn:"result"`
+	WinAmount    float64 `json:"winamount"`
 }
 
 type CoinFilps struct {
-	BetNumber		int		`json:"number"`
-	BetAmount		float64	`json:"amount"`
-	RandomResult	int		`josn:"result"`
-	WinAmount		float64	`json:"winamount"`
+	BetNumber    int     `json:"number"`
+	BetAmount    float64 `json:"amount"`
+	RandomResult int     `josn:"result"`
+	WinAmount    float64 `json:"winamount"`
 }
 
 type RollADices struct {
-	BetNumber		[6]int	`json:"number"`
-	BetAmount		float64	`json:"amount"`
-	RandomResult	int		`josn:"result"`
-	WinAmount		float64	`json:"winamount"`
+	BetNumber    [6]int  `json:"number"`
+	BetAmount    float64 `json:"amount"`
+	RandomResult int     `josn:"result"`
+	WinAmount    float64 `json:"winamount"`
 }
 
 type TwoDices struct {
-	BetNumber		[12]int	`json:"number"`
-	BetAmount		float64	`json:"amount"`
-	RandomResult	int		`josn:"result"`
-	WinAmount		float64	`json:"winamount"`
+	BetNumber    [12]int `json:"number"`
+	BetAmount    float64 `json:"amount"`
+	RandomResult int     `josn:"result"`
+	WinAmount    float64 `json:"winamount"`
 }
 
 //post接口接收json數據
-func testrand(writer http.ResponseWriter,  request *http.Request) {
+func testrand(writer http.ResponseWriter, request *http.Request) {
 	var rand Random
 	if err := json.NewDecoder(request.Body).Decode(&rand); err != nil {
 		request.Body.Close()
@@ -55,7 +55,10 @@ func testrand(writer http.ResponseWriter,  request *http.Request) {
 }
 
 // PlayEtheRoll API
-func PlayEtheRoll(writer http.ResponseWriter,  request *http.Request) {
+func PlayEtheRoll(writer http.ResponseWriter, request *http.Request) {
+	if request.Method == "OPTIONS" {
+		return
+	}
 	var bet EtheRoll
 	if err := json.NewDecoder(request.Body).Decode(&bet); err != nil {
 		request.Body.Close()
@@ -63,7 +66,7 @@ func PlayEtheRoll(writer http.ResponseWriter,  request *http.Request) {
 	}
 	x := bet.BetNumber
 	y := bet.BetAmount
-	bet.RandomResult,bet.WinAmount = Etheroll(x,y)
+	bet.RandomResult, bet.WinAmount = Etheroll(x, y)
 
 	if err := json.NewEncoder(writer).Encode(bet); err != nil {
 		log.Fatal(err)
@@ -71,7 +74,10 @@ func PlayEtheRoll(writer http.ResponseWriter,  request *http.Request) {
 }
 
 // PlayCoinFilp API
-func PlayCoinFilp(writer http.ResponseWriter,  request *http.Request) {
+func PlayCoinFilp(writer http.ResponseWriter, request *http.Request) {
+	if request.Method == "OPTIONS" {
+		return
+	}
 	var bet CoinFilps
 	if err := json.NewDecoder(request.Body).Decode(&bet); err != nil {
 		request.Body.Close()
@@ -79,7 +85,7 @@ func PlayCoinFilp(writer http.ResponseWriter,  request *http.Request) {
 	}
 	x := bet.BetNumber
 	y := bet.BetAmount
-	bet.RandomResult,bet.WinAmount = CoinFilp(x,y)
+	bet.RandomResult, bet.WinAmount = CoinFilp(x, y)
 
 	if err := json.NewEncoder(writer).Encode(bet); err != nil {
 		log.Fatal(err)
@@ -87,14 +93,17 @@ func PlayCoinFilp(writer http.ResponseWriter,  request *http.Request) {
 }
 
 // PlayRollADice API
-func PlayRollADice(writer http.ResponseWriter,  request *http.Request) {
+func PlayRollADice(writer http.ResponseWriter, request *http.Request) {
+	if request.Method == "OPTIONS" {
+		return
+	}
 	var bet RollADices
 	if err := json.NewDecoder(request.Body).Decode(&bet); err != nil {
 		request.Body.Close()
 		log.Fatal(err)
 	}
 
-	bet.RandomResult,bet.WinAmount = RollADice(bet.BetNumber, bet.BetAmount)
+	bet.RandomResult, bet.WinAmount = RollADice(bet.BetNumber, bet.BetAmount)
 
 	if err := json.NewEncoder(writer).Encode(bet); err != nil {
 		log.Fatal(err)
@@ -102,18 +111,21 @@ func PlayRollADice(writer http.ResponseWriter,  request *http.Request) {
 }
 
 // PlayTwoDice API
-func PlayTwoDice(writer http.ResponseWriter,  request *http.Request) {
+func PlayTwoDice(writer http.ResponseWriter, request *http.Request) {
+	if request.Method == "OPTIONS" {
+		return
+	}
 	var bet TwoDices
 	if err := json.NewDecoder(request.Body).Decode(&bet); err != nil {
 		request.Body.Close()
 		log.Fatal(err)
 	}
 	var x [12]int
-	for i:=0; i<12; i++ {
+	for i := 0; i < 12; i++ {
 		x[i] = bet.BetNumber[i]
 	}
 	y := bet.BetAmount
-	bet.RandomResult,bet.WinAmount = TwoDice(x,y)
+	bet.RandomResult, bet.WinAmount = TwoDice(x, y)
 
 	if err := json.NewEncoder(writer).Encode(bet); err != nil {
 		log.Fatal(err)
