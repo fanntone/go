@@ -88,7 +88,7 @@ func RollADice(num [6]int, money float64) (int, float64) {
 // Winning bet pays up to 35.64x
 func TwoDice(num [12]int, money float64) (int, float64) {
 	winvalue := 0.0
-	x := (GetRandom(5) + GetRandom(5) + 2)
+	x := (GetRandom(6) + GetRandom(6) + 2)
 
 	betTable := []float64{0, 35.64, 11.88, 5.94, 3.56, 2.38, 1.70, 1.37, 1.19, 1.08, 1.02, 0}
 	total := 0
