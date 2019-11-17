@@ -136,13 +136,13 @@ func CoinFilp(num int, money float64) (int, float64) {
 // Return (random, winvalue)
 func Etheroll(num int, money float64) (int, float64) {
 	winvalue := 0.0
-	x := GetRandom(100) + 1
+	x := GetRandom(100)
 
 	if num <= 0 || num >= 98 {
 		return x, winvalue
 	}
 
-	if x <= num {
+	if x < num {
 		winvalue = (98 / (float64)(num)) * money
 	}
 
