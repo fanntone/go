@@ -90,21 +90,24 @@ func TwoDice(num [12]int, money float64) (int, float64) {
 	winvalue := 0.0
 	x := (GetRandom(6) + GetRandom(6) + 2)
 
-	betTable := []float64{0, 35.64, 11.88, 5.94, 3.56, 2.38, 1.70, 1.37, 1.19, 1.08, 1.02, 0}
+	chanceTable := []float64{2.78, 5.56, 8.33, 11.11, 13.89, 16.67, 13.89, 11.11, 8.33, 5.56, 2.78}
 	total := 0
-	for i := 0; i < len(betTable); i++ {
+	for i := 0; i < 11; i++ {
 		total += num[i]
 	}
 
-	if total <= 0 || total >= 13 {
+	if total <= 0 || total >= 11 {
 		return x, winvalue
 	}
-
-	for j := 0; j < len(betTable); j++ {
-		if 1 == num[j] && x == (j+1) {
-			winvalue = betTable[total-1] * float64(money)
-			break
+	chance := float64(0)
+	for i := 0; i < 11; i++ {
+		if num[i] > 0 {
+			chance += chanceTable[i]
 		}
+	}
+
+	if num[x-2] == 1 {
+		winvalue = 98 * float64(money) / chance
 	}
 
 	fmt.Println("Win value: = ", winvalue)
