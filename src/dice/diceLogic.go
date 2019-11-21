@@ -8,7 +8,6 @@ import (
 
 	"log"
 	"strconv"
-	"strings"
 
 	hdwallet "github.com/miguelmota/go-ethereum-hdwallet"
 	"github.com/tyler-smith/go-bip39"
@@ -41,7 +40,8 @@ func GetSefeRandomSeed() int64 {
 	fmt.Println(account.Address.Hex())
 	str := account.Address.Hex()
 	subs := str[2:9]
-	res, err := strconv.ParseInt(strings.ToLower(subs), 16, 64)
+	res, err := strconv.ParseInt(subs, 16, 64)
+
 	if err != nil {
 		log.Fatal(err)
 	}
