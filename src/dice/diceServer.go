@@ -8,7 +8,7 @@ import (
 
 type Random struct {
 	Range  int `json:"range"`
-	Result int `json:"reslut"`
+	Result int `json:"result"`
 }
 
 type EtheRoll struct {

@@ -21,6 +21,7 @@ func main() {
 	mux.HandleFunc("/PlayRollADice", PlayRollADice)
 	mux.HandleFunc("/PlayTwoDice", PlayTwoDice)
 	mux.HandleFunc("/PlayCoinFilp", PlayCoinFilp)
+	mux.HandleFunc("/PlaySlot", PlaySlot)
 
 	handler := cors.Default().Handler(mux)
 	log.Fatal(http.ListenAndServe(":"+port, handler))
