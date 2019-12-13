@@ -47,67 +47,71 @@ func BetOneLine(bet int) (result []int, money int) {
 	fmt.Println("R4 :=", R4[x[3]-1]);
 	fmt.Println("R5 :=", R5[x[4]-1]);
 
-	if !(bet == 1 || bet == 6) {
+	if !(bet == 1 || bet == 5) {
 		return x, winvalue
 	}
 	
-	name := []string {R1[x[0]-1], R2[x[1]-1], R2[x[2]-1], R3[x[3]-1], R4[x[4]-1]}
-	calLine(bet, name, x)
-	
+	name := []string {R1[x[0]-1], R2[x[1]-1], R3[x[2]-1], R4[x[3]-1], R5[x[4]-1]}
+	winvalue = calLine(bet, name)
+
 	return x, winvalue
 }
 
-func calLine(bet int, name []string, x []int) int {
+func calLine(bet int, name []string) int {
 	count := 0;
 
-	if x[0] == x[1] {
-		if x[1] == x[2] {
-			if x[2] == x[3] {
-				if x[3] == x[4] {
+	if name[0] == name[1] {
+		if name[1] == name[2] {
+			if name[2] == name[3] {
+				if name[3] == name[4] {
 					// 5R
 					count += findsymbol(bet, name[0], 5)
+					fmt.Println("5R: R1==R2==R3==R4==R5")
 				} else {
 					// 4R
 					count += findsymbol(bet, name[0], 4)
+					fmt.Println("4R: R1==R2==R3==R4")
 				}
 			} else {
 				// 3R
 				count += findsymbol(bet, name[0], 3)
+				fmt.Println("3R: R1==R2==R3")
 			}
 		} else {
 			// 2R
 			count += findsymbol(bet, name[0], 2)
+			fmt.Println("2R: R1==R2")
 		}
-	} 
-
-	if x[1] == x[2] {
-		if x[2] == x[3] {
-			if x[3] == x[4] {
+	} else if name[1] == name[2] {
+		if name[2] == name[3] {
+			if name[3] == name[4] {
 				// 4R
 				count += findsymbol(bet, name[1], 4)
+				fmt.Println("4R: R2==R3==R4==R5")
 			} else {
 				// 3R
 				count += findsymbol(bet, name[1], 3)
+				fmt.Println("3R: R2==R3==R4")
 			}
 		} else {
 			// 2R
 			count += findsymbol(bet, name[1], 3)
+			fmt.Println("2R: R2==R3")
 		}
-	}
-
-	if x[2] == x[3] {
-		if x[3] == x[4] {
+	} else if name[2] == name[3] {
+		if name[3] == name[4] {
 			// 3R
 			count += findsymbol(bet, name[2], 3)
+			fmt.Println("3R: R3==R4==R5")
 		}  else {
 			// 2R
 			count += findsymbol(bet, name[2], 2)
+			fmt.Println("2R: R3==R4")
 		}
-	}
-
-	if x[3] == x[4] {
+	} else if name[3] == name[4] {
 		// 2R
 		count += findsymbol(bet, name[3], 2)
+		fmt.Println("2R: R4==R5")
 	}
 
 	return count;
@@ -142,7 +146,7 @@ func findsymbol(bet int, name string, nr int) int {
 			pay = BONUSmax[nr-2]
 		} else if name == "BANANA" {
 			pay = BANANAmax[nr-2]
-		} else if name == "BEGEMO" {
+		} else if name == "BEGEMOT" {
 			pay = BEGEMOTmax[nr-2]
 		} else if name == "COCODRILE" {
 			pay = COCODRILEmax[nr-2]
@@ -154,7 +158,7 @@ func findsymbol(bet int, name string, nr int) int {
 			pay = MANmax[nr-2]
 		} else if name == "MONKEY" {
 			pay = MONKEYmax[nr-2]
-		} else if name == "LIONmax" {
+		} else if name == "LION" {
 			pay = LIONmax[nr-2]
 		}
 	} else if bet == 1 {
@@ -162,7 +166,7 @@ func findsymbol(bet int, name string, nr int) int {
 			pay = BONUSone[nr-2]
 		} else if name == "BANANA" {
 			pay = BANANAone[nr-2]
-		} else if name == "BEGEMO" {
+		} else if name == "BEGEMOT" {
 			pay = BEGEMOTone[nr-2]
 		} else if name == "COCODRILE" {
 			pay = COCODRILEone[nr-2]
@@ -174,10 +178,11 @@ func findsymbol(bet int, name string, nr int) int {
 			pay = MANone[nr-2]
 		} else if name == "MONKEY" {
 			pay = MONKEYone[nr-2]
-		} else if name == "LIONmax" {
+		} else if name == "LION" {
 			pay = LIONone[nr-2]
 		}
 	}
-
+	fmt.Println("nr = ", nr)
+	fmt.Println("Pay = ", pay)
 	return pay;
 }
