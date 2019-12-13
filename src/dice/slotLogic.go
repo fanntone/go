@@ -82,7 +82,9 @@ func calLine(bet int, name []string) int {
 			count += findsymbol(bet, name[0], 2)
 			fmt.Println("2R: R1==R2")
 		}
-	} else if name[1] == name[2] {
+	}
+	
+	if name[1] == name[2] && name[1] != name[0]{
 		if name[2] == name[3] {
 			if name[3] == name[4] {
 				// 4R
@@ -98,7 +100,9 @@ func calLine(bet int, name []string) int {
 			count += findsymbol(bet, name[1], 3)
 			fmt.Println("2R: R2==R3")
 		}
-	} else if name[2] == name[3] {
+	}
+	
+	if name[2] == name[3] && name[2] != name[1] && name[2] != name[0]{
 		if name[3] == name[4] {
 			// 3R
 			count += findsymbol(bet, name[2], 3)
@@ -108,7 +112,9 @@ func calLine(bet int, name []string) int {
 			count += findsymbol(bet, name[2], 2)
 			fmt.Println("2R: R3==R4")
 		}
-	} else if name[3] == name[4] {
+	} 
+	
+	if name[3] == name[4] && name[3] != name[2] && name[3]!= name[1] && name[3] != name[0]{
 		// 2R
 		count += findsymbol(bet, name[3], 2)
 		fmt.Println("2R: R4==R5")
